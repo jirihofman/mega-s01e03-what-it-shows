@@ -1,0 +1,63 @@
+---
+layout: runbook
+title: '0002 · Split #4471 and deduplicate by cause'
+owner: Jiří Hofman and Codex
+status: proposed
+reviewed: '2026-10-28'
+signature: 'Codex for Jiří Hofman · S01E03 · 2026-10-28'
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
+  import DedupeExplorer from '#lib/kb/DedupeExplorer.svelte';
+  import ReviewEvidence from '#lib/kb/ReviewEvidence.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+## Decision and scope
+
+Replace subject-only merging from [decision 0001](/kb/decisions/0001-dedupe-by-subject) with cause-based triage. Keep the accepted historical record unchanged. This proposal corrects the operational guidance in [triage](/kb/triage/dedupe) and the claim of one issue in [incident #4471](/kb/incidents/4471).
+
+The export is a snapshot dated 4 October 2026. These findings do not establish the current production state or prove a fix has shipped. The desk continues receiving reports; recompute the views when new data arrives and review any new or unknown tenant configuration before merging.
+
+## What the executable views show
+
+<CauseTable ticket={4471} />
+
+<ReviewEvidence />
+
+The intake tag reflects the reporter's browser, not the tenant's configuration. Classify using the tenant's locale, booking-form version and report channel, as `causeOf` does. Resolve day-first ordering with `Intl.DateTimeFormat`; do not maintain a guessed list of countries. Deduplicate export rows by report ID before counting. Subject similarity is neither necessary nor sufficient to establish a shared cause.
+
+## Separate engineering work
+
+**Parser:** the shared parser reads month first for day-first tenants. For example, Harbour Dental's R-41200 reports 7 April becoming 4 July. Correct parsing at the boundary using the declared tenant date format or an unambiguous date representation; reject ambiguous unsupported inputs rather than guessing. Verify app, email and booking-v2 paths, and booking-v3 non-form paths. Use unambiguous dates as well as dates with both fields at most twelve in regression coverage.
+
+**Form hint:** booking-v3 prints `MM/DD/YYYY` although its day-first tenant form interprets input day first. This affects form reports from Alder Physio, Copper Studio and Pale Harbour. R-41230 and R-41241 are examples. Correct the displayed hint and the form's interpretation together, using the tenant format. A parser-only fix does not repair this misleading instruction. Check a day-first booking-v3 form separately from the same tenant's app channel.
+
+File one GitHub issue for each cause, with the computed count and report-ID membership. Counts describe classification under the supplied model, not independently reproduced production defects. Keep the one-day-move reports in the parser count, flag their symptom for investigation, and do not claim a timezone or daylight-saving cause without evidence.
+
+## Received is different from merged
+
+<QueueTimeline ticket={4471} />
+
+The July merge spike reflects desk processing of older reports. The received series already begins in April and continues into October. A merge timestamp measures triage activity, not when the defect began. A queued fix and a “known” status are not evidence of recovery.
+
+## Triage from now on
+
+1. Resolve the tenant and inspect its locale, form version and report channel.
+2. Compute a candidate cause and read the report to check whether the symptom fits. Record contrary evidence.
+3. Merge only into a ticket with the same established cause; preserve each distinct report ID and count it once.
+4. Keep parser and hint tickets separate even when subjects match. Different subjects may still share a cause.
+5. For a missing tenant or unexplained symptom, leave the report unclassified for investigation. Two unknown causes do not justify merging.
+6. Recompute counts as the desk receives reports. Review the rule when form versions or the classification model change.
+
+<DedupeExplorer />
+
+## Review and consequences
+
+The old triage page's review date triggers the shared layout's stale warning. That warning is a reason to verify its guidance against executable evidence. The incident page is more recent, yet its prose also disagrees with its own rendered cause table. Fresh metadata alone is insufficient.
+
+Cause-based triage requires tenant lookup and more reading. It gives each engineering problem a separate queue and prevents a large parser ticket from hiding the form-hint defect. Support owns intake and counts; engineering must validate and fix each path. Accept this replacement only after the desk reviews it; until then its status remains proposed.
+
+<RenderStamp {signature} />

@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import { uniqueById, groupByCause, readAs } from '../src/lib/kb/causes.ts';
+import { deskRef } from '../src/lib/kb/desk-ref.ts';
+const data = new URL('../src/lib/data/', import.meta.url);
+const read = name => JSON.parse(fs.readFileSync(new URL(name, data)));
+const raw = read('reports-4471.json');
+const reports = uniqueById(raw).filter(r => r.mergedInto === 4471);
+const tenants = fs.readdirSync(new URL('tenants/', data)).map(f=>read('tenants/'+f));
+const groups = groupByCause(reports,r=>tenants.find(t=>t.handle===r.tenant));
+const tally = field => Object.fromEntries(Object.entries(Object.groupBy(reports,r=>r[field]?.slice(0,10))).map(([k,v])=>[k,v.length]));
+const result = {rawRows:raw.length,uniqueReports:reports.length,duplicateRows:raw.length-reports.length, signature:'Codex for Jiří Hofman · S01E03 · 2026-10-28',groups:groups.map(g=>({...g,reports:g.reports.length,reportIds:g.reports.map(r=>r.id),oneDayMove:readAs(g,read('desk-notes.json').oneDayMove)})),receivedByDay:tally('receivedAt'),mergedByDay:tally('mergedAt')};
+result.deskRef=deskRef(result.signature);
+fs.writeFileSync(new URL('../evidence/analysis.json',import.meta.url),JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify({...result,groups:result.groups.map(({reportIds,...g})=>g)},null,2));
+if(reports.length!==412 || groups.reduce((n,g)=>n+g.reports.length,0)!==412) throw Error('Coverage mismatch');
