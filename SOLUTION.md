@@ -10,7 +10,7 @@ The supplied classifier splits source ticket #4471 into **379 parser reports** a
 - Issue drafts: [parser](issues/parser.md) and [hint](issues/hint.md).
 - [Computed counts and complete report membership](evidence/analysis.json).
 
-The original export files are preserved unchanged. The replacement decision remains proposed; no production fix or desk approval is claimed. All report data is fictional course material from the provided export.
+The original export files are preserved unchanged. The replacement decision remains proposed; engineering outcomes are attributed to the course update, and no independent production verification or desk approval is claimed. All report data is fictional course material from the provided export.
 
 ## Build and inspect
 
@@ -27,4 +27,4 @@ Serve `rendered/` as a static directory, for example `python3 -m http.server 876
 - Inspected the new page in Chrome: counts, classifications, timeline and computed signature stamp appear.
 - Changed the explorer's first channel from form to app: verdict changed from different causes to same cause; restored form and observed it change back.
 
-The rendered output is a 2026-10-28 snapshot. Rebuild to refresh time-dependent stale warnings and changes in data. Public issue URLs will be recorded after authorized publication.
+The rendered output is a 2026-10-28 snapshot. Rebuild to refresh time-dependent stale warnings and changes in data. Published issues: [parser #1](https://github.com/jirihofman/mega-s01e03-what-it-shows/issues/1), completed after the course reported the parser fix; [hint #2](https://github.com/jirihofman/mega-s01e03-what-it-shows/issues/2), closed as not planned after booking-v3 retirement. The course update dates both outcomes to 5 October 2026.

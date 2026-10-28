@@ -19,7 +19,16 @@ signature: 'Codex for Jiří Hofman · S01E03 · 2026-10-28'
 
 Replace subject-only merging from [decision 0001](/kb/decisions/0001-dedupe-by-subject) with cause-based triage. Keep the accepted historical record unchanged. This proposal corrects the operational guidance in [triage](/kb/triage/dedupe) and the claim of one issue in [incident #4471](/kb/incidents/4471).
 
-The export is a snapshot dated 4 October 2026. These findings do not establish the current production state or prove a fix has shipped. The desk continues receiving reports; recompute the views when new data arrives and review any new or unknown tenant configuration before merging.
+The export is a snapshot dated 4 October 2026. The course engineering update now records #4471 closed on 5 October. The counts and views below describe the historical export, not an open queue. Recompute the views when new data arrives and review any new or unknown tenant configuration before merging.
+
+## Engineering outcome · 5 October 2026
+
+The [course engineering update](https://hq.mega.dev/challenges/what-it-shows#engineering-update) records two different resolutions:
+
+- **Parser — fixed:** `fix(dates): parse dd/mm for eu locales`. Closed [parser issue #1](https://github.com/jirihofman/mega-s01e03-what-it-shows/issues/1) as completed.
+- **Hint — won’t fix:** booking-v3 form retired. Closed [hint issue #2](https://github.com/jirihofman/mega-s01e03-what-it-shows/issues/2) as not planned. Retirement removes the affected form; it is not evidence that the misleading hint was repaired.
+
+These outcomes are reported by the course, not independently tested against production. The triage decision remains proposed for desk review. The historical cause table still labels the hint as lacking a ticket in the original desk export; the linked GitHub issues now track both findings.
 
 ## What the executable views show
 
@@ -29,13 +38,13 @@ The export is a snapshot dated 4 October 2026. These findings do not establish t
 
 The intake tag reflects the reporter's browser, not the tenant's configuration. Classify using the tenant's locale, booking-form version and report channel, as `causeOf` does. Resolve day-first ordering with `Intl.DateTimeFormat`; do not maintain a guessed list of countries. Deduplicate export rows by report ID before counting. Subject similarity is neither necessary nor sufficient to establish a shared cause.
 
-## Separate engineering work
+## Historical findings and verification guidance
 
 **Parser:** the shared parser reads month first for day-first tenants. For example, Harbour Dental's R-41200 reports 7 April becoming 4 July. Correct parsing at the boundary using the declared tenant date format or an unambiguous date representation; reject ambiguous unsupported inputs rather than guessing. Verify app, email and booking-v2 paths, and booking-v3 non-form paths. Use unambiguous dates as well as dates with both fields at most twelve in regression coverage.
 
 **Form hint:** booking-v3 prints `MM/DD/YYYY` although its day-first tenant form interprets input day first. This affects form reports from Alder Physio, Copper Studio and Pale Harbour. R-41230 and R-41241 are examples. Correct the displayed hint and the form's interpretation together, using the tenant format. A parser-only fix does not repair this misleading instruction. Check a day-first booking-v3 form separately from the same tenant's app channel.
 
-File one GitHub issue for each cause, with the computed count and report-ID membership. Counts describe classification under the supplied model, not independently reproduced production defects. Keep the one-day-move reports in the parser count, flag their symptom for investigation, and do not claim a timezone or daylight-saving cause without evidence.
+The linked GitHub issues record each cause, its computed count, report-ID membership and distinct engineering outcome. Counts describe classification under the supplied model, not independently reproduced production defects. Keep the one-day-move reports in the parser count, flag their symptom for investigation, and do not claim a timezone or daylight-saving cause without evidence.
 
 ## Received is different from merged
 
@@ -58,6 +67,6 @@ The July merge spike reflects desk processing of older reports. The received ser
 
 The old triage page's review date triggers the shared layout's stale warning. That warning is a reason to verify its guidance against executable evidence. The incident page is more recent, yet its prose also disagrees with its own rendered cause table. Fresh metadata alone is insufficient.
 
-Cause-based triage requires tenant lookup and more reading. It gives each engineering problem a separate queue and prevents a large parser ticket from hiding the form-hint defect. Support owns intake and counts; engineering must validate and fix each path. Accept this replacement only after the desk reviews it; until then its status remains proposed.
+Cause-based triage requires tenant lookup and more reading. It gives each engineering problem a separate queue and prevents a large parser ticket from hiding the form-hint defect. Support owns intake and counts; engineering owns verification of each resolution. Accept this replacement only after the desk reviews it; until then its status remains proposed.
 
 <RenderStamp {signature} />

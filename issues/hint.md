@@ -24,3 +24,9 @@ See `src/routes/kb/decisions/0002-dedupe-by-cause/+page.svx` and `rendered/kb/de
 ## Report membership
 
 R-41230, R-41241, R-41251, R-41259, R-41262, R-41275, R-41294, R-41305, R-41308, R-41366, R-41372, R-41384, R-41387, R-41396, R-41400, R-41406, R-41415, R-41416, R-41418, R-41428, R-41439, R-41441, R-41449, R-41453, R-41456, R-41460, R-41472, R-41485, R-41493, R-41539, R-41572, R-41582, R-41584
+
+## Engineering outcome — 5 October 2026
+
+**Won’t fix.** The course engineering update records #4471 closed on 5 October 2026 and booking-v3 retired. Closed as not planned because the affected form was retired, not because its hint was repaired.
+
+Source: https://hq.mega.dev/challenges/what-it-shows#engineering-update
