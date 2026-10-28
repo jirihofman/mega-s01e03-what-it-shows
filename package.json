@@ -4,5 +4,5 @@
   "type": "module",
   "scripts": {"analyze": "node scripts/analyze.mjs", "build": "node scripts/render.mjs"},
   "engines": {"node": ">=24"},
-  "devDependencies": {"svelte": "5.50.1", "mdsvex": "0.12.8", "esbuild": "0.25.12"}
+  "devDependencies": {"svelte": "5.55.7", "mdsvex": "0.12.8", "esbuild": "0.25.12"}
 }
