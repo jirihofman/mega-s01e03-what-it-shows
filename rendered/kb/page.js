@@ -5455,7 +5455,7 @@ function KbIndex($$anchor, $$props) {
         "owner": "Ji\u0159\xED Hofman and Codex",
         "status": "proposed",
         "reviewed": "2026-10-28",
-        "signature": "Codex for Ji\u0159\xED Hofman \xB7 S01E03 \xB7 2026-10-28"
+        "signature": "v1.eyJzdWIiOiI1NzI0IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyMjY4MTcsImV4cCI6MTc5MzMxMzIxN30.5-wlZzQ2QzpyDix9AAkOOrRq7kKaJw9vy7aF_wPg66U"
       }
     },
     "/src/routes/kb/incidents/4471/+page.svx": {

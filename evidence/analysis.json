@@ -2,7 +2,6 @@
   "rawRows": 427,
   "uniqueReports": 412,
   "duplicateRows": 15,
-  "signature": "Codex for Jiří Hofman · S01E03 · 2026-10-28",
   "groups": [
     {
       "cause": "parser",
@@ -709,5 +708,5 @@
     "2026-10-03": 2,
     "2026-10-04": 2
   },
-  "deskRef": "DR-8C64-H2Q6"
+  "deskRef": "DR-DXSN-G49N"
 }

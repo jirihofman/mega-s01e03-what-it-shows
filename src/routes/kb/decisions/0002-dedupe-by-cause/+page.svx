@@ -4,7 +4,7 @@ title: '0002 · Split #4471 and deduplicate by cause'
 owner: Jiří Hofman and Codex
 status: proposed
 reviewed: '2026-10-28'
-signature: 'Codex for Jiří Hofman · S01E03 · 2026-10-28'
+signature: "v1.eyJzdWIiOiI1NzI0IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyMjY4MTcsImV4cCI6MTc5MzMxMzIxN30.5-wlZzQ2QzpyDix9AAkOOrRq7kKaJw9vy7aF_wPg66U"
 ---
 
 <script>
